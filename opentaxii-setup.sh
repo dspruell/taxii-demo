@@ -52,10 +52,11 @@ create_venv()
 	python3 -m venv "$VENV_DIR"
 }
 
+# shellcheck disable=SC2086
 install_packages()
 {
-	./"$VENV_DIR"/bin/pip install \
-		"$PKG_OPENTAXII" "$PKG_CABBY" "$PKG_EXTRAS"
+	./"$VENV_DIR"/bin/pip install $PKG_EXTRAS
+	./"$VENV_DIR"/bin/pip install "$PKG_OPENTAXII" "$PKG_CABBY"
 }
 
 check_venv()
