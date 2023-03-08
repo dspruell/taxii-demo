@@ -108,6 +108,7 @@ fetch_stix_documents()
 load_opentaxii_data()
 {
 	local _conf_file_data="$1"
+	mkdir -p "$DATA_DIR"
 	"$VENV_DIR/bin/opentaxii-sync-data" "$_conf_file_data"
 }
 
@@ -125,6 +126,7 @@ fi
 echo "Configuring TAXII server..."
 configure_opentaxii "$CONF_FILE_OPENTAXII_SERVER"
 echo "Downloading STIX documents..."
+mkdir -p "$STIX_FILES_DIR"
 fetch_stix_documents "$STIX_FILES_DIR" "$STIX_DOCUMENTS"
 echo "Loading data into configuration..."
 load_opentaxii_data "$CONF_FILE_OPENTAXII_DATA"
