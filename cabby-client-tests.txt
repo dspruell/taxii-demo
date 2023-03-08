@@ -1,0 +1,7 @@
+./env.d/bin/taxii-discovery --path http://localhost:9000/services/discovery
+
+./env.d/bin/taxii-collections --username test --password test --path http://localhost:9000/services/collection-management
+
+for f in stix-docs/*.xml; do echo "$f"; ./env.d/bin/taxii-push --host localhost --port 9000 --discovery /services/discovery --content-file "$f" --binding "urn:stix.mitre.org:xml:1.1.1" --user admin --pass admin --dest collection-cisa; done
+
+./env.d/bin/taxii-poll --username test --password test --host localhost --port 9000 --discovery /services/discovery --collection collection-cisa

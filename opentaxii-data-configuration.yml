@@ -1,0 +1,62 @@
+---
+
+services:
+  - id: inbox_default
+    type: inbox
+    address: /services/inbox
+    description: Default Inbox Service
+    destination_collection_required: yes
+    accept_all_content: yes
+    authentication_required: yes
+    protocol_bindings:
+      - urn:taxii.mitre.org:protocol:http:1.0
+
+  - id: discovery_default
+    type: discovery
+    address: /services/discovery
+    description: Default Discovery Service
+    advertised_services:
+      - inbox_default
+      - discovery_default
+      - collection_management_default
+      - poll_default
+    protocol_bindings:
+      - urn:taxii.mitre.org:protocol:http:1.0
+
+  - id: collection_management_default
+    type: collection_management
+    address: /services/collection-management
+    description: Default Collection Management Service
+    protocol_bindings:
+      - urn:taxii.mitre.org:protocol:http:1.0
+
+  - id: poll_default
+    type: poll
+    address: /services/poll
+    description: Default Poll Service
+    subscription_required: no
+    max_result_count: 100
+    max_result_size: 10
+    authentication_required: yes
+    protocol_bindings:
+      - urn:taxii.mitre.org:protocol:http:1.0
+
+collections:
+  - name: collection-cisa
+    available: true
+    accept_all_content: true
+    type: DATA_SET
+    description: CISA Threat Indicators
+    service_ids:
+      - inbox_default
+      - collection_management_default
+      - poll_default
+
+accounts:
+  - username: test
+    password: test
+    permissions:
+      collection-cisa: read
+  - username: admin
+    password: admin
+    is_admin: yes
